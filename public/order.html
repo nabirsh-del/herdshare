@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Place Your Order - HerdShare</title>
+      <link rel="stylesheet" href="/css/style.css">
+      <script src="https://js.stripe.com/v3/"></script>
+  </head>
+<body>
+      <nav class="navbar">
+                <div class="nav-container">
+                              <div class="nav-brand">HerdShare</div>div>
+                              <ul class="nav-links">
+                                                <li><a href="/">Home</a>a></li>
+                                              <li><a href="/for-houses.html">For Houses</a>a></li>
+                                              <li><a href="/pricing.html">Pricing</a>a></li>
+                              </ul>ul>
+                </div>div>
+      </nav>nav>
+
+    <section style="background: white;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                        <h1>Place Your Order</h1>
+                        <form id="orderForm" class="form" style="margin-top: 2rem;">
+                                        <h2>Select Size</h2>
+                                        <select name="size" required>
+                                                            <option value="">Choose size...</option>option>
+                                                            <option value="whole">Whole Cow ($4,750 - 475 lbs)</option>option>
+                                                            <option value="half">Half Cow ($2,375 - ~237 lbs)</option>option>
+                                                            <option value="quarter">Quarter Cow ($1,188 - ~118 lbs)</option>option>
+                                        </select>select>
+                        
+                                        <h2 style="margin-top: 2rem;">Your Information</h2>
+                                        <input type="text" name="buyerName" placeholder="Full Name" required>
+                                        <input type="text" name="organization" placeholder="Organization/House Name" required>
+                                        <input type="email" name="email" placeholder="Email" required>
+                                        <input type="tel" name="phone" placeholder="Phone" required>
+                                        <input type="text" name="address" placeholder="Delivery Address" required>
+                        
+                                        <h2 style="margin-top: 2rem;">Preferences</h2>
+                                        <textarea name="preferences" placeholder="Cut preferences, special requests, delivery window..." style="min-height: 80px;"></textarea>
+                        
+                                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Proceed to Checkout</button>button>
+                        </form>form>
+            
+                        <p style="margin-top: 2rem; font-size: 0.9rem; color: #666; text-align: center;">
+                            Powered by Stripe. Your payment information is secure.
+                        </p>p>
+            </div>div>
+    </section>section>
+
+    <footer class="footer">
+            <p>&copy; 2026 HerdShare. American Beef. American Hands.</p>
+    </footer>footer>
+
+    <script>
+              document.getElementById('orderForm').addEventListener('submit', async (e) => {
+                            e.preventDefault();
+
+                            const formData = new FormData(e.target);
+                            const size = formData.get('size');
+
+                            const prices = {
+                                              'whole': 475000,
+                                              'half': 237500,
+                                              'quarter': 118750
+                            };
+
+                            const orderData = Object.fromEntries(formData);
+
+                            try {
+                                              const response = await fetch('/api/create-checkout-session', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({
+                                                                                              size: size,
+                                                                                              amount: prices[size],
+                                                                                              ...orderData
+                                                                      })
+                                              });
+
+                                              const session = await response.json();
+
+                                              if (session.url) {
+                                                                    window.location.href = session.url;
+                                              } else {
+                                                                    alert('Error creating checkout session');
+                                              }
+                            } catch (error) {
+                                              alert('Error processing order: ' + error.message);
+                            }
+              });
+    </script>
+</body>
+</html>html>
+    </script></p></h2></h1></li></li>
+</body></title>
+  </head>
