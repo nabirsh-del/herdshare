@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>For Ranchers - HerdShare</title>
+      <link rel="stylesheet" href="/css/style.css">
+  </head>
+<body>
+      <nav class="navbar">
+                <div class="nav-container">
+                              <div class="nav-brand">HerdShare</div>div>
+                              <ul class="nav-links">
+                                                <li><a href="/">Home</a>a></li>
+                                              <li><a href="/for-houses.html">For Houses</a>a></li>
+                                              <li><a href="/for-ranchers.html">For Ranchers</a>a></li>
+                                              <li><a href="/pricing.html">Pricing</a>a></li>
+                                              <li><a href="/cookbook.html">Cookbook</a>a></li>
+                                              <li><a href="/about.html">About</a>a></li>
+                              </ul>ul>
+                </div>div>
+      </nav>nav>
+
+    <section class="hero">
+            <div class="hero-content">
+                        <h1>Partner with HerdShare</h1>
+                        <p class="subheader">Access reliable demand without the marketing and retail burden. We do the selling. You focus on raising.</p>p>
+                        <div class="hero-ctas">
+                                        <button class="btn btn-primary" onclick="scrollToForm()">Become a Partner</button>button>
+                        </div>div>
+            </div>div>
+    </section>section>
+
+    <section style="background: white;">
+            <h2>Why Partner with HerdShare</h2>
+            <div class="service-cards">
+                        <div class="card">
+                                        <h3>Guaranteed Demand</h3>
+                                        <p>No marketing burden. Orders come to us. We match you with buyers.</p>
+                        </div>div>
+                        <div class="card">
+                                        <h3>Fair Pricing</h3>
+                                        <p>$10/lb. Transparent. No middleman markup. You get paid directly.</p>
+                        </div>div>
+                        <div class="card">
+                                        <h3>Focus on Ranching</h3>
+                                        <p>Handle production. We handle sales, coordination, cold chain.</p>
+                        </div>div>
+            </div>div>
+    </section>section>
+
+    <section style="background: #f9f7f4;">
+            <h2>The HerdShare Partnership</h2>
+            <div class="steps-container">
+                        <div class="step">
+                                        <h3>1. Apply</h3>
+                                        <p>Tell us about your ranch, herd size, and availability.</p>
+                        </div>div>
+                        <div class="step">
+                                        <h3>2. Coordinate</h3>
+                                        <p>We match you with buyers. Agree on timing and specs.</p>
+                        </div>div>
+                        <div class="step">
+                                        <h3>3. Process & Deliver</h3>
+                                        <p>We handle USDA processing, cold chain, logistics. You raise.</p>
+                        </div>div>
+            </div>div>
+    </section>section>
+
+    <section style="background: white;" id="rancher-form-section">
+            <h2>Become a Rancher Partner</h2>
+            <form id="rancherForm" class="form">
+                        <input type="text" name="ranchName" placeholder="Ranch Name" required>
+                        <input type="text" name="location" placeholder="Location (City, State)" required>
+                        <input type="number" name="herdSize" placeholder="Herd Size" required>
+                        <input type="text" name="breeds" placeholder="Primary Breeds" required>
+                        <select name="availability" required>
+                                        <option value="">Select Availability</option>option>
+                                        <option value="monthly">Monthly</option>option>
+                                        <option value="quarterly">Quarterly</option>option>
+                                        <option value="seasonal">Seasonal</option>option>
+                                        <option value="yearround">Year-Round</option>option>
+                        </select>select>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="tel" name="phone" placeholder="Phone" required>
+                        <textarea name="notes" placeholder="Tell us about your ranch, practices, values..."></textarea>
+                        <button type="submit" class="btn btn-primary">Submit Partnership Inquiry</button>button>
+            </form>form>
+    </section>section>
+
+    <section style="background: #f9f7f4;">
+            <h2>What Ranchers Are Saying</h2>
+            <div class="service-cards">
+                        <div class="card">
+                                        <p style="font-style: italic;">"Finally, a buyer that gets it. They handle everything. I just raise great cattle."</p>
+                                        <p style="margin-top: 1rem; font-weight: 600;">— Jim, Texas</p>
+                        </div>div>
+                        <div class="card">
+                                        <p style="font-style: italic;">"No middleman. Fair price. Our values align. This is the future of beef."</p>
+                                        <p style="margin-top: 1rem; font-weight: 600;">— Sarah, Montana</p>
+                        </div>div>
+                        <div class="card">
+                                        <p style="font-style: italic;">"Reliable orders. Consistent price. They make it easy to stay independent."</p>
+                                        <p style="margin-top: 1rem; font-weight: 600;">— Michael, Kansas</p>
+                        </div>div>
+            </div>div>
+    </section>section>
+
+    <footer class="footer">
+            <p>&copy; 2026 HerdShare. American Beef. American Hands.</p>
+            <ul class="footer-links">
+                        <li><a href="/about.html">About</a>a></li>
+                        <li><a href="/contact.html">Contact</a>a></li>
+            </ul>ul>
+    </footer>footer>
+
+    <script src="/js/forms.js"></script>
+    <script>
+              document.getElementById('rancherForm').addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            try {
+                                              await fetch('/api/submit-rancher', {
+                                                                    method: 'POST',
+                                                                    body: JSON.stringify(Object.fromEntries(formData)),
+                                                                    headers: { 'Content-Type': 'application/json' }
+                                              });
+                                              alert('Thank you! We\'ll review your application soon.');
+                                              e.target.reset();
+                            } catch (error) {
+                                              alert('Error submitting form. Please try again.');
+                            }
+              });
+
+              function scrollToForm() {
+                            document.getElementById('rancher-form-section').scrollIntoView({ behavior: 'smooth' });
+              }
+    </script>
+</body>
+</html>html>
+    </script></li></li></p></p></h2></h1></li></li>
+</body></title>
+  </head>
