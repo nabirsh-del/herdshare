@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact - HerdShare</title>
+      <link rel="stylesheet" href="/css/style.css">
+  </head>
+<body>
+      <nav class="navbar">
+                <div class="nav-container">
+                              <div class="nav-brand">HerdShare</div>div>
+                              <ul class="nav-links">
+                                                <li><a href="/">Home</a>a></li>
+                                              <li><a href="/for-houses.html">For Houses</a>a></li>
+                                              <li><a href="/for-ranchers.html">For Ranchers</a>a></li>
+                                              <li><a href="/contact.html">Contact</a>a></li>
+                              </ul>ul>
+                </div>div>
+      </nav>nav>
+
+    <section style="background: white;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                        <h1>Get in Touch</h1>
+                        <p style="text-align: center; margin-bottom: 2rem;">Questions? Feedback? Want to partner with us? We'd love to hear from you.</p>p>
+            
+                        <form id="contactForm" class="form">
+                                        <input type="text" name="name" placeholder="Your Name" required>
+                                        <input type="email" name="email" placeholder="Your Email" required>
+                                        <input type="text" name="subject" placeholder="Subject" required>
+                                        <textarea name="message" placeholder="Your Message" style="min-height: 150px;" required></textarea>
+                                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>button>
+                        </form>form>
+            </div>div>
+    </section>section>
+
+    <section style="background: #f9f7f4;">
+            <div style="max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem;">
+                        <div>
+                                          <h3>Email</h3>h3>
+                                          <p>hello@herdshare.com</p>
+                        </div>
+                        <div>
+                                        <h3>Support</h3>
+                                        <p>For order questions and general inquiries</p>
+                        </div>
+            </div>
+    </section>section>
+
+    <footer class="footer">
+            <p>&copy; 2026 HerdShare. American Beef. American Hands.</p>
+    </footer>footer>
+
+    <script>
+              document.getElementById('contactForm').addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            try {
+                                              await fetch('/api/submit-contact', {
+                                                                    method: 'POST',
+                                                                    body: JSON.stringify(Object.fromEntries(formData)),
+                                                                    headers: { 'Content-Type': 'application/json' }
+                                              });
+                                              alert('Thank you for reaching out! We\'ll be in touch soon.');
+                                              e.target.reset();
+                            } catch (error) {
+                                              alert('Error sending message. Please try again.');
+                            }
+              });
+    </script>
+</body>
+</html>html>
+    </script></h3></p>
+                        </div></h1></li></li>
+</body></title>
+  </head>
