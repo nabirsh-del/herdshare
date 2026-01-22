@@ -4,7 +4,7 @@ import { prisma } from '@/lib/db';
 import { requireAuth } from '@/lib/auth';
 import { logEvent } from '@/lib/event-log';
 import { calculatePricing } from '@/lib/pricing';
-import { ProductPlan } from '@herdshare/db';
+import { ProductPlan, Prisma } from '@herdshare/db';
 
 // Validation schema for creating allocation intent
 const createAllocationSchema = z.object({
@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
         estimatedBoxedWeightLbs: data.estimatedHangingWeightLbs
           ? data.estimatedHangingWeightLbs * 0.6 // ~60% yield
           : null,
-        cutsPreferences: data.cutsPreferences ?? null,
+        cutsPreferences: data.cutsPreferences as Prisma.InputJsonValue | undefined,
         storageCapacityConfirmed: data.storageCapacityConfirmed,
-        shippingAddress: data.shippingAddress ?? null,
+        shippingAddress: data.shippingAddress as Prisma.InputJsonValue | undefined,
         pricingSnapshot,
         status: 'DRAFT',
       },

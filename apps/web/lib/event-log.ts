@@ -1,5 +1,5 @@
 import { prisma } from './db';
-import { UserRole } from '@herdshare/db';
+import { UserRole, Prisma } from '@herdshare/db';
 
 export type EventLogInput = {
   actorRole?: UserRole;
@@ -20,7 +20,7 @@ export async function logEvent(input: EventLogInput) {
       entityType: input.entityType,
       entityId: input.entityId,
       eventName: input.eventName,
-      eventPayload: input.eventPayload ?? null,
+      eventPayload: input.eventPayload as Prisma.InputJsonValue | undefined,
       allocationIntentId: input.allocationIntentId,
     },
   });
