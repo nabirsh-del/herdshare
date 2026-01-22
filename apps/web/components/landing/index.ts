@@ -1,0 +1,9 @@
+export { LandingNavbar } from './LandingNavbar';
+export { Hero } from './Hero';
+export { ProblemSolution } from './ProblemSolution';
+export { HowItWorks } from './HowItWorks';
+export { WhoWeServe } from './WhoWeServe';
+export { Pricing } from './Pricing';
+export { About } from './About';
+export { ContactForm } from './ContactForm';
+export { Footer } from './Footer';

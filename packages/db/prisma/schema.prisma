@@ -1,0 +1,398 @@
+// HerdShare Database Schema
+// Planning infrastructure for beef - Stripe-to-HerdShare mapping
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTH MODELS
+// ============================================================================
+
+enum UserRole {
+  ADMIN
+  RANCHER
+  BUYER
+  FINANCE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  clerkId       String    @unique // Clerk external user ID
+  email         String    @unique
+  firstName     String?
+  lastName      String?
+  phone         String?
+  role          UserRole  @default(BUYER)
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  allocationIntents    AllocationIntent[]
+  capacityReservations CapacityReservation[]
+  rancherCommitments   RancherCommitment[]
+  eventLogsAsActor     EventLog[]
+
+  // Buyer-specific
+  defaultShippingAddress Json?
+  storageCapacityNotes   String?
+
+  // Rancher-specific
+  ranchName              String?
+  ranchLocation          String?
+  region                 String?
+
+  @@index([clerkId])
+  @@index([email])
+  @@index([role])
+  @@index([region])
+}
+
+// ============================================================================
+// ALLOCATION INTENT (equivalent to Stripe PaymentIntent)
+// ============================================================================
+
+enum AllocationStatus {
+  DRAFT
+  CHECKOUT_STARTED
+  PAID
+  SCHEDULED
+  PROCESSING
+  SHIPPED
+  COMPLETED
+  CANCELED
+}
+
+enum ProductPlan {
+  WHOLE
+  HALF
+  QUARTER
+  CUSTOM
+}
+
+model AllocationIntent {
+  id                        String           @id @default(cuid())
+  buyerId                   String
+  buyer                     User             @relation(fields: [buyerId], references: [id])
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @updatedAt
+
+  // Delivery window
+  targetDeliveryWindowStart DateTime
+  targetDeliveryWindowEnd   DateTime
+
+  // Product details
+  productPlan               ProductPlan
+  estimatedHangingWeightLbs Decimal?         @db.Decimal(10, 2)
+  estimatedBoxedWeightLbs   Decimal?         @db.Decimal(10, 2)
+  cutsPreferences           Json?            // { "steaks": "1in", "ground": "1lb_packs", etc. }
+  storageCapacityConfirmed  Boolean          @default(false)
+
+  // Status tracking
+  status                    AllocationStatus @default(DRAFT)
+
+  // Pricing snapshot (frozen at checkout time - NEVER recompute)
+  pricingSnapshot           Json?            // { pricePerLb, logisticsSurcharge, processingFee, taxes, total }
+
+  // Stripe integration
+  stripeCheckoutSessionId   String?          @unique
+  stripePaymentIntentId     String?          @unique
+
+  // Fulfillment assignment
+  fulfillmentRouteId        String?
+  fulfillmentRoute          FulfillmentRoute? @relation(fields: [fulfillmentRouteId], references: [id])
+  assignedRancherId         String?
+  assignedProcessorId       String?
+
+  // Shipping details
+  shippingAddress           Json?            // { street, city, state, zip, instructions }
+  deliveredAt               DateTime?
+
+  // Relations
+  complianceCheckpoints     ComplianceCheckpoint[]
+  eventLogs                 EventLog[]
+
+  @@index([status])
+  @@index([buyerId])
+  @@index([createdAt])
+  @@index([targetDeliveryWindowStart, targetDeliveryWindowEnd])
+  @@index([fulfillmentRouteId])
+  @@index([stripeCheckoutSessionId])
+  @@index([stripePaymentIntentId])
+}
+
+// ============================================================================
+// CAPACITY RESERVATION (equivalent to Stripe Subscriptions)
+// ============================================================================
+
+enum ReservationCadence {
+  ONE_TIME
+  MONTHLY
+  QUARTERLY
+}
+
+model CapacityReservation {
+  id                    String             @id @default(cuid())
+  buyerId               String
+  buyer                 User               @relation(fields: [buyerId], references: [id])
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  cadence               ReservationCadence @default(ONE_TIME)
+  reservedVolumeLbs     Decimal            @db.Decimal(10, 2)
+  preferredDeliveryWeek Int?               // Week of month (1-4)
+  active                Boolean            @default(true)
+  nextCycleDate         DateTime?
+
+  // Pricing terms (frozen at reservation time)
+  pricingTerms          Json?              // { pricePerLb, lockedUntil, discountPercent }
+
+  // Product preference
+  preferredPlan         ProductPlan        @default(QUARTER)
+  region                String?
+
+  @@index([buyerId])
+  @@index([active])
+  @@index([nextCycleDate])
+  @@index([region])
+}
+
+// ============================================================================
+// FULFILLMENT ROUTE (equivalent to Payment Routing)
+// ============================================================================
+
+model FulfillmentRoute {
+  id                    String   @id @default(cuid())
+  region                String
+  geoClusterId          String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Planning
+  plannedDropDates      DateTime[]
+  aggregatedVolumeLbs   Decimal  @default(0) @db.Decimal(10, 2)
+
+  // Assignments
+  assignedProcessorId   String?
+  assignedCarrierId     String?
+
+  // Efficiency metrics
+  routeDensityScore     Decimal? @db.Decimal(5, 2) // 0-100 scale
+  logisticsSurchargePerLb Decimal? @db.Decimal(10, 4)
+
+  // Status
+  active                Boolean  @default(true)
+
+  // Relations
+  allocationIntents     AllocationIntent[]
+
+  @@index([region])
+  @@index([geoClusterId])
+  @@index([active])
+  @@index([plannedDropDates])
+}
+
+// ============================================================================
+// GEO CLUSTER (for geo-clustering logic)
+// ============================================================================
+
+enum DensityTier {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model GeoCluster {
+  id                String      @id @default(cuid())
+  name              String
+  region            String
+  zipPrefixes       String[]    // e.g., ["802", "803", "804"]
+  centerLat         Decimal?    @db.Decimal(10, 7)
+  centerLng         Decimal?    @db.Decimal(10, 7)
+  radiusMiles       Int         @default(50)
+  densityTier       DensityTier @default(MEDIUM)
+  surchargePerLb    Decimal     @db.Decimal(10, 4)
+  active            Boolean     @default(true)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([region])
+  @@index([zipPrefixes])
+  @@index([active])
+}
+
+// ============================================================================
+// RANCHER COMMITMENT (equivalent to Merchant Tools)
+// ============================================================================
+
+enum CommitmentStatus {
+  PROPOSED
+  CONFIRMED
+  FULFILLED
+}
+
+model RancherCommitment {
+  id                        String           @id @default(cuid())
+  rancherId                 String
+  rancher                   User             @relation(fields: [rancherId], references: [id])
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @updatedAt
+
+  region                    String
+  rolling90DayCommitmentLbs Decimal          @db.Decimal(10, 2)
+  availableHeadCount        Int              @default(0)
+  availableProcessingSlots  Int              @default(0)
+  status                    CommitmentStatus @default(PROPOSED)
+
+  // Period this commitment covers
+  periodStart               DateTime
+  periodEnd                 DateTime
+
+  // Notes
+  notes                     String?
+
+  @@index([rancherId])
+  @@index([region])
+  @@index([status])
+  @@index([periodStart, periodEnd])
+}
+
+// ============================================================================
+// COMPLIANCE CHECKPOINT (equivalent to Fraud/Compliance)
+// ============================================================================
+
+enum CheckpointType {
+  TEMP_AT_PICKUP
+  TEMP_AT_HANDOFF
+  TEMP_AT_DELIVERY
+  SEAL_INTACT
+  DOC_UPLOADED
+}
+
+enum PassFail {
+  PASS
+  FAIL
+  PENDING
+}
+
+model ComplianceCheckpoint {
+  id                 String           @id @default(cuid())
+  allocationIntentId String
+  allocationIntent   AllocationIntent @relation(fields: [allocationIntentId], references: [id])
+  createdAt          DateTime         @default(now())
+
+  checkpointType     CheckpointType
+  measuredValue      String?          // e.g., "34" for temperature
+  unit               String?          // e.g., "°F"
+  timestamp          DateTime
+  evidenceUrl        String?          // S3/R2 URL for uploaded docs/photos
+  passFail           PassFail         @default(PENDING)
+  notes              String?
+
+  // Who recorded this
+  recordedById       String?
+
+  @@index([allocationIntentId])
+  @@index([checkpointType])
+  @@index([passFail])
+  @@index([timestamp])
+}
+
+// ============================================================================
+// EVENT LOG (Audit Trail)
+// ============================================================================
+
+model EventLog {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+
+  // Actor
+  actorRole    UserRole?
+  actorId      String?
+  actor        User?    @relation(fields: [actorId], references: [id])
+
+  // Entity being modified
+  entityType   String   // e.g., "AllocationIntent", "RancherCommitment"
+  entityId     String
+
+  // Event details
+  eventName    String   // e.g., "status_changed", "checkout_started", "payment_received"
+  eventPayload Json?    // { previousStatus, newStatus, metadata }
+
+  // Optional relation to AllocationIntent for quick lookups
+  allocationIntentId String?
+  allocationIntent   AllocationIntent? @relation(fields: [allocationIntentId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([eventName])
+  @@index([createdAt])
+  @@index([allocationIntentId])
+}
+
+// ============================================================================
+// PROCESSOR PARTNER (Processing + Logistics Partners)
+// ============================================================================
+
+model ProcessorPartner {
+  id              String   @id @default(cuid())
+  name            String
+  region          String
+  address         Json?    // { street, city, state, zip }
+  contactEmail    String?
+  contactPhone    String?
+  usdaNumber      String?  // USDA inspection number
+  capacityPerWeek Int?     // heads per week
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([region])
+  @@index([active])
+}
+
+// ============================================================================
+// CARRIER PARTNER (Logistics)
+// ============================================================================
+
+model CarrierPartner {
+  id              String   @id @default(cuid())
+  name            String
+  regions         String[] // regions they serve
+  contactEmail    String?
+  contactPhone    String?
+  coldChainCert   Boolean  @default(false)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([regions])
+  @@index([active])
+}
+
+// ============================================================================
+// PRICING CONFIG (Admin-managed)
+// ============================================================================
+
+model PricingConfig {
+  id                  String      @id @default(cuid())
+  productPlan         ProductPlan @unique
+  basePricePerLb      Decimal     @db.Decimal(10, 4)
+  processingFeePerLb  Decimal     @db.Decimal(10, 4)
+  minWeightLbs        Decimal?    @db.Decimal(10, 2)
+  maxWeightLbs        Decimal?    @db.Decimal(10, 2)
+  active              Boolean     @default(true)
+  effectiveFrom       DateTime    @default(now())
+  effectiveUntil      DateTime?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@index([productPlan])
+  @@index([active])
+}
