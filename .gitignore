@@ -44,3 +44,6 @@ prisma/migrations/*_migration.sql
 # Misc
 .cache
 *.pem
+
+# Local Netlify folder
+.netlify
