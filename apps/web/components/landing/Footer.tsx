@@ -1,31 +1,32 @@
 import Link from 'next/link';
-import { HerdShareLogo } from './HerdShareLogo';
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-12">
+    <footer className="bg-herd-green-dark text-white py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <HerdShareLogo className="w-10 h-10" color="#ffffff" />
-              <span className="text-white font-semibold text-xl">HerdShare</span>
+              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">H</span>
+              </div>
+              <span className="text-white font-bold text-xl">HerdShare</span>
             </div>
-            <p className="text-gray-400 mb-4 leading-relaxed">
+            <p className="text-herd-cream/70 mb-4">
               Planning infrastructure for food. Direct from Texas ranchers to
               your kitchen.
             </p>
-            <p className="text-white text-lg">
-              American Beef. American Values.
+            <p className="text-white font-display text-lg italic">
+              &quot;American Beef. American Values.&quot;
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-3">
+            <h4 className="font-bold text-lg mb-4">Quick Links</h4>
+            <ul className="space-y-2">
               <li>
                 <a
                   href="#how-it-works"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-herd-cream/70 hover:text-white transition-colors"
                 >
                   How It Works
                 </a>
@@ -33,7 +34,7 @@ export function Footer() {
               <li>
                 <a
                   href="#who-we-serve"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-herd-cream/70 hover:text-white transition-colors"
                 >
                   Who We Serve
                 </a>
@@ -41,7 +42,7 @@ export function Footer() {
               <li>
                 <a
                   href="#pricing"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-herd-cream/70 hover:text-white transition-colors"
                 >
                   Pricing
                 </a>
@@ -49,7 +50,7 @@ export function Footer() {
               <li>
                 <a
                   href="#about"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-herd-cream/70 hover:text-white transition-colors"
                 >
                   About
                 </a>
@@ -57,7 +58,7 @@ export function Footer() {
               <li>
                 <a
                   href="#contact"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-herd-cream/70 hover:text-white transition-colors"
                 >
                   Contact
                 </a>
@@ -65,8 +66,8 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-lg mb-4">Contact</h4>
-            <ul className="space-y-3 text-gray-400">
+            <h4 className="font-bold text-lg mb-4">Contact</h4>
+            <ul className="space-y-2 text-herd-cream/70">
               <li>
                 <a
                   href="mailto:hello@herdsharecompany.com"
@@ -87,7 +88,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+        <div className="border-t border-white/20 mt-8 pt-8 text-center text-herd-cream/50 text-sm">
           <p>&copy; {new Date().getFullYear()} HerdShare Company. All rights reserved.</p>
         </div>
       </div>

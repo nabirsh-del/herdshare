@@ -43,6 +43,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['Georgia', 'serif'],
+        body: ['system-ui', '-apple-system', 'sans-serif'],
       },
     },
   },
