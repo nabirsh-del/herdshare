@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { HerdShareLogo } from './HerdShareLogo';
 
 interface LandingNavbarProps {
   userId?: string | null;
@@ -12,29 +13,38 @@ export function LandingNavbar({ userId }: LandingNavbarProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 transition-shadow ${
-        scrolled ? 'shadow-md' : 'shadow-sm'
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <>
+      {/* Green accent bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-herd-green z-50" />
+      <nav
+        className={`fixed top-1 left-0 right-0 bg-white z-50 transition-shadow ${
+          scrolled ? 'shadow-sm' : ''
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-herd-green rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">H</span>
-            </div>
-            <span className="text-herd-green font-bold text-xl hidden sm:block">
+            <HerdShareLogo className="w-10 h-10" />
+            <span className="text-herd-green font-semibold text-xl hidden sm:block">
               HerdShare
             </span>
           </Link>
@@ -152,6 +162,7 @@ export function LandingNavbar({ userId }: LandingNavbarProps) {
           </div>
         )}
       </div>
-    </nav>
+      </nav>
+    </>
   );
 }

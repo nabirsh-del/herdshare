@@ -4,73 +4,82 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export function Pricing() {
   const headerRef = useScrollReveal();
-  const comparisonRef = useScrollReveal();
-  const stat1Ref = useScrollReveal();
-  const stat2Ref = useScrollReveal();
-  const stat3Ref = useScrollReveal();
+  const valueRef = useScrollReveal();
+  const statsRef = useScrollReveal();
 
   return (
-    <section id="pricing" className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={headerRef} className="text-center mb-16 reveal">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-herd-green mb-4">
-            The Numbers Don&apos;t Lie
+    <section id="pricing" className="py-24 bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={headerRef} className="mb-16 reveal">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
+            Flat-Rate Pricing
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Premium beef at a fraction of retail prices.
+          <p className="text-gray-600 text-lg max-w-xl">
+            One price per pound for every cut. Ribeye, filet, ground beef—all the same rate.
           </p>
         </div>
 
-        <div ref={comparisonRef} className="max-w-4xl mx-auto mb-16 reveal">
-          <div className="bg-herd-cream rounded-2xl p-8 md:p-12">
-            <div className="grid md:grid-cols-3 gap-8 items-center">
-              <div className="text-center">
-                <p className="text-gray-500 uppercase tracking-wider text-sm mb-2">
-                  Grocery Store Ribeye
-                </p>
-                <p className="font-display text-5xl font-bold text-red-500">
-                  $18<span className="text-2xl">/lb</span>
-                </p>
-                <p className="text-gray-500 mt-2">And rising</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-herd-green rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-white font-bold text-lg">VS</span>
-                </div>
-              </div>
-              <div className="text-center">
-                <p className="text-gray-500 uppercase tracking-wider text-sm mb-2">
-                  HerdShare (All Cuts)
-                </p>
-                <p className="font-display text-5xl font-bold text-herd-green">
-                  $5.50<span className="text-2xl">/lb</span>
-                </p>
-                <p className="text-herd-green font-medium mt-2">
-                  Locked for 3 years
-                </p>
-              </div>
+        <div ref={valueRef} className="max-w-3xl mb-20 reveal">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Traditional Beef Buying
+              </h3>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex gap-3">
+                  <span className="text-gray-400">—</span>
+                  <span>Prices change week to week</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-gray-400">—</span>
+                  <span>Premium cuts cost significantly more</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-gray-400">—</span>
+                  <span>Unpredictable food costs</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-herd-green mb-4">
+                The HerdShare Way
+              </h3>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex gap-3">
+                  <span className="text-herd-green">—</span>
+                  <span>Locked pricing for the contract term</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-herd-green">—</span>
+                  <span>Same flat rate across all cuts</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-herd-green">—</span>
+                  <span>Plan your budget with confidence</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          <div ref={stat1Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
+        <div ref={statsRef} className="grid md:grid-cols-3 gap-12 reveal">
+          <div>
+            <p className="text-5xl font-semibold text-gray-900 mb-2">
               ~475
             </p>
-            <p className="text-gray-600 text-lg">Pounds per steer</p>
+            <p className="text-gray-600">Pounds per steer</p>
           </div>
-          <div ref={stat2Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
-              ~$2,500
-            </p>
-            <p className="text-gray-600 text-lg">Per delivery</p>
-          </div>
-          <div ref={stat3Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
+          <div>
+            <p className="text-5xl font-semibold text-gray-900 mb-2">
               8+
             </p>
-            <p className="text-gray-600 text-lg">Weeks of supply</p>
+            <p className="text-gray-600">Weeks of supply</p>
+          </div>
+          <div>
+            <p className="text-5xl font-semibold text-gray-900 mb-2">
+              100%
+            </p>
+            <p className="text-gray-600">Texas raised beef</p>
           </div>
         </div>
       </div>
