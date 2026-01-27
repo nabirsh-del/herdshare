@@ -8,53 +8,53 @@ export function ProblemSolution() {
   const solutionRef = useScrollReveal();
 
   return (
-    <section className="py-20 bg-herd-cream">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={headerRef} className="text-center mb-16 reveal">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-herd-green mb-4">
+    <section className="py-24 bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={headerRef} className="text-center mb-20 reveal">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
             The Beef Industry Is Broken
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">
             Four companies control 85% of beef processing. Prices are up 50%
             since 2020.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-          <div
-            ref={problemRef}
-            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-red-400 reveal"
-          >
-            <h3 className="font-display text-2xl font-bold text-gray-800 mb-4">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+          <div ref={problemRef} className="reveal">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">
               The Problem
             </h3>
             <ul className="space-y-4 text-gray-600">
-              <li>
-                <strong>Price volatility</strong>—beef costs change week to week
+              <li className="flex items-start">
+                <span className="text-gray-400 mr-3">—</span>
+                <span><strong className="text-gray-900">Price volatility</strong> — beef costs change week to week</span>
               </li>
-              <li>
-                <strong>No traceability</strong>—unknown beef sources
+              <li className="flex items-start">
+                <span className="text-gray-400 mr-3">—</span>
+                <span><strong className="text-gray-900">No traceability</strong> — unknown beef sources</span>
               </li>
-              <li>
-                <strong>Middleman markups</strong>—every step adds cost
+              <li className="flex items-start">
+                <span className="text-gray-400 mr-3">—</span>
+                <span><strong className="text-gray-900">Middleman markups</strong> — every step adds cost</span>
               </li>
             </ul>
           </div>
-          <div
-            ref={solutionRef}
-            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-herd-green reveal"
-          >
-            <h3 className="font-display text-2xl font-bold text-gray-800 mb-4">
+          <div ref={solutionRef} className="reveal">
+            <h3 className="text-xl font-semibold text-herd-green mb-6">
               The HerdShare Solution
             </h3>
             <ul className="space-y-4 text-gray-600">
-              <li>
-                <strong>Locked pricing</strong>—$5-6/lb flat rate for 3 years
+              <li className="flex items-start">
+                <span className="text-herd-green mr-3">—</span>
+                <span><strong className="text-gray-900">Locked pricing</strong> — flat rate for 3 years</span>
               </li>
-              <li>
-                <strong>Full traceability</strong>—know your ranch and rancher
+              <li className="flex items-start">
+                <span className="text-herd-green mr-3">—</span>
+                <span><strong className="text-gray-900">Full traceability</strong> — know your ranch and rancher</span>
               </li>
-              <li>
-                <strong>Direct connection</strong>—support American ranchers
+              <li className="flex items-start">
+                <span className="text-herd-green mr-3">—</span>
+                <span><strong className="text-gray-900">Direct connection</strong> — support American ranchers</span>
               </li>
             </ul>
           </div>

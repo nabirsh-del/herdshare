@@ -58,27 +58,19 @@
   }
 
   /* Landing page styles */
-  .hero-gradient {
-    background: linear-gradient(135deg, #2D5016 0%, #1E3A0F 50%, #2D5016 100%);
-  }
-
-  .text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
   .card-hover {
-    @apply transition-transform duration-300 ease-out;
+    @apply transition-all duration-200 ease-out;
   }
 
   .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   }
 
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
   }
 
   .reveal.active {

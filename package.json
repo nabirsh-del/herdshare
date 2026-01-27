@@ -9,8 +9,9 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:web": "npm run db:generate && turbo run build --filter=@herdshare/web",
     "lint": "turbo run lint",
-    "db:generate": "turbo run db:generate --filter=@herdshare/db",
+    "db:generate": "cd packages/db && npx prisma generate",
     "db:push": "turbo run db:push --filter=@herdshare/db",
     "db:migrate": "turbo run db:migrate --filter=@herdshare/db",
     "db:seed": "turbo run db:seed --filter=@herdshare/db",

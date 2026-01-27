@@ -20,7 +20,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -150px 0px',
+        rootMargin: '0px 0px -50px 0px',
       }
     );
 

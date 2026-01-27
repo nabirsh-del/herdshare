@@ -10,67 +10,57 @@ export function Pricing() {
   const stat3Ref = useScrollReveal();
 
   return (
-    <section id="pricing" className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={headerRef} className="text-center mb-16 reveal">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-herd-green mb-4">
-            The Numbers Don&apos;t Lie
+    <section id="pricing" className="py-24 bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={headerRef} className="text-center mb-20 reveal">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
+            Simple, Transparent Pricing
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Premium beef at a fraction of retail prices.
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">
+            One flat rate per pound. All cuts included. No hidden fees.
           </p>
         </div>
 
-        <div ref={comparisonRef} className="max-w-4xl mx-auto mb-16 reveal">
-          <div className="bg-herd-cream rounded-2xl p-8 md:p-12">
+        <div ref={comparisonRef} className="max-w-3xl mx-auto mb-20 reveal">
+          <div className="border border-gray-200 rounded-lg p-8 md:p-12">
             <div className="grid md:grid-cols-3 gap-8 items-center">
               <div className="text-center">
-                <p className="text-gray-500 uppercase tracking-wider text-sm mb-2">
-                  Grocery Store Ribeye
+                <p className="text-gray-500 uppercase tracking-wider text-xs mb-2">
+                  Grocery Store
                 </p>
-                <p className="font-display text-5xl font-bold text-red-500">
-                  $18<span className="text-2xl">/lb</span>
+                <p className="text-3xl font-semibold text-gray-400">
+                  Variable
                 </p>
-                <p className="text-gray-500 mt-2">And rising</p>
+                <p className="text-gray-400 text-sm mt-2">Prices fluctuate weekly</p>
+              </div>
+              <div className="text-center hidden md:block">
+                <p className="text-gray-300 text-sm">vs</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-herd-green rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-white font-bold text-lg">VS</span>
-                </div>
-              </div>
-              <div className="text-center">
-                <p className="text-gray-500 uppercase tracking-wider text-sm mb-2">
-                  HerdShare (All Cuts)
+                <p className="text-gray-500 uppercase tracking-wider text-xs mb-2">
+                  HerdShare
                 </p>
-                <p className="font-display text-5xl font-bold text-herd-green">
-                  $5.50<span className="text-2xl">/lb</span>
+                <p className="text-3xl font-semibold text-herd-green">
+                  Flat Rate
                 </p>
-                <p className="text-herd-green font-medium mt-2">
-                  Locked for 3 years
-                </p>
+                <p className="text-herd-green text-sm mt-2">Locked for 3 years</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          <div ref={stat1Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
-              ~475
-            </p>
-            <p className="text-gray-600 text-lg">Pounds per steer</p>
+          <div ref={stat1Ref} className="text-center reveal">
+            <p className="text-5xl font-light text-gray-900 mb-2">~475</p>
+            <p className="text-gray-600">Pounds per steer</p>
           </div>
-          <div ref={stat2Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
-              ~$2,500
-            </p>
-            <p className="text-gray-600 text-lg">Per delivery</p>
+          <div ref={stat2Ref} className="text-center reveal">
+            <p className="text-5xl font-light text-gray-900 mb-2">8+</p>
+            <p className="text-gray-600">Weeks of supply</p>
           </div>
-          <div ref={stat3Ref} className="text-center p-8 bg-herd-cream rounded-2xl reveal">
-            <p className="font-display text-5xl font-bold text-herd-green mb-2">
-              8+
-            </p>
-            <p className="text-gray-600 text-lg">Weeks of supply</p>
+          <div ref={stat3Ref} className="text-center reveal">
+            <p className="text-5xl font-light text-gray-900 mb-2">3</p>
+            <p className="text-gray-600">Year price lock</p>
           </div>
         </div>
       </div>

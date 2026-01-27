@@ -78,7 +78,7 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  return middleware(request, {} as any);
+  return middleware(request as any, {} as any);
 }
 
 export const config = {
