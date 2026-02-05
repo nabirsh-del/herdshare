@@ -54,8 +54,8 @@ export default async function AdminSettingsPage() {
                     {pricingConfigs.map((config) => (
                       <tr key={config.id} className="border-b last:border-0">
                         <td className="py-3 font-medium">{config.productPlan}</td>
-                        <td className="py-3">${(config.basePricePerLb / 100).toFixed(2)}</td>
-                        <td className="py-3">${(config.processingFeePerLb / 100).toFixed(2)}</td>
+                        <td className="py-3">${(Number(config.basePricePerLb) / 100).toFixed(2)}</td>
+                        <td className="py-3">${(Number(config.processingFeePerLb) / 100).toFixed(2)}</td>
                         <td className="py-3">
                           <span
                             className={`px-2 py-1 rounded-full text-xs ${
@@ -114,7 +114,7 @@ export default async function AdminSettingsPage() {
                             {cluster.densityTier}
                           </span>
                         </td>
-                        <td className="py-3">${(cluster.surchargePerLb / 100).toFixed(2)}</td>
+                        <td className="py-3">${(Number(cluster.surchargePerLb) / 100).toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>
