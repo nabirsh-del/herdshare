@@ -1,0 +1,31 @@
+<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left vertical bar -->
+  <rect x="5" y="5" width="16" height="70" fill="white"/>
+
+  <!-- Horizontal bar -->
+  <rect x="21" y="35" width="20" height="14" fill="white"/>
+
+  <!-- Right side with cow head -->
+  <path d="
+    M41 35
+    L41 75
+    L57 75
+    L57 55
+    C62 52 68 48 72 42
+    C76 36 74 30 70 28
+    L72 22
+    C72 18 68 16 64 18
+    L60 24
+    C56 20 50 18 46 20
+    L44 26
+    C40 24 36 26 36 30
+    L41 35
+    Z
+  " fill="white"/>
+
+  <!-- Left horn -->
+  <path d="M48 20 C44 12 38 8 34 6" stroke="white" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Right horn -->
+  <path d="M64 18 C68 10 74 6 80 5" stroke="white" stroke-width="5" stroke-linecap="round"/>
+</svg>

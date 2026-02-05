@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface LandingNavbarProps {
   userId?: string | null;
@@ -38,9 +39,13 @@ export function LandingNavbar({ userId }: LandingNavbarProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-herd-green rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">H</span>
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="HerdShare"
+              width={40}
+              height={32}
+              className="h-8 w-auto"
+            />
             <span className="text-herd-green font-bold text-xl hidden sm:block">
               HerdShare
             </span>
