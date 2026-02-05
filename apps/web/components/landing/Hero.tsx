@@ -7,18 +7,26 @@ export function Hero() {
   const contentRef = useScrollReveal();
 
   return (
-    <section className="min-h-screen flex items-center pt-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <section
+      className="min-h-screen flex items-center pt-20 relative bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80')`,
+      }}
+    >
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/50" />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div ref={contentRef} className="text-center reveal">
           <p className="text-herd-green uppercase tracking-widest text-sm mb-6 font-medium">
             Direct from Texas Ranchers
           </p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight mb-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-8">
             Premium Beef at a
             <br />
             <span className="text-herd-green">Predictable Price</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed">
             Skip the middlemen. Lock in a flat rate across all cuts—ribeye to
             ground beef. Full traceability from ranch to table.
           </p>
@@ -31,7 +39,7 @@ export function Hero() {
             </Link>
             <a
               href="#how-it-works"
-              className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-medium text-lg hover:border-gray-400 hover:bg-gray-50 transition-colors"
+              className="border border-white/70 text-white px-8 py-4 rounded-lg font-medium text-lg hover:border-white hover:bg-white/10 transition-colors"
             >
               Learn More
             </a>
