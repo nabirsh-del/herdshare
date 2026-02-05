@@ -18,13 +18,13 @@ export function Hero() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div ref={contentRef} className="text-center reveal">
-          <p className="text-herd-green uppercase tracking-widest text-sm mb-6 font-medium">
+          <p className="text-white uppercase tracking-widest text-sm mb-6 font-medium">
             Direct from Texas Ranchers
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-8">
             Premium Beef at a
             <br />
-            <span className="text-herd-green">Predictable Price</span>
+            <span className="text-white">Predictable Price</span>
           </h1>
           <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed">
             Skip the middlemen. Lock in a flat rate across all cuts—ribeye to
