@@ -7,8 +7,14 @@ export function Hero() {
   const contentRef = useScrollReveal();
 
   return (
-    <section className="min-h-screen flex items-center pt-20 bg-gradient-to-br from-herd-green via-herd-green to-herd-green-dark">
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-32">
+    <section
+      className="min-h-screen flex items-center pt-20 relative bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80')`,
+      }}
+    >
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-32 relative z-10">
         <div ref={contentRef} className="text-center reveal">
           <p className="text-white/80 uppercase tracking-widest text-sm mb-8 font-medium">
             Direct from Texas Ranchers
