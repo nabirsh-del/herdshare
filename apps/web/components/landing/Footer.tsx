@@ -9,11 +9,11 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Image
-                src="/logo-white.svg"
+                src="/logo.png"
                 alt="HerdShare"
                 width={40}
-                height={32}
-                className="h-8 w-auto"
+                height={40}
+                className="h-10 w-auto rounded"
               />
               <span className="text-white font-bold text-xl">HerdShare</span>
             </div>

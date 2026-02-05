@@ -40,11 +40,11 @@ export function LandingNavbar({ userId }: LandingNavbarProps) {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="HerdShare"
               width={40}
-              height={32}
-              className="h-8 w-auto"
+              height={40}
+              className="h-10 w-auto"
             />
             <span className="text-herd-green font-bold text-xl hidden sm:block">
               HerdShare
