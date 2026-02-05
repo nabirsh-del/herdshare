@@ -27,8 +27,7 @@ export function Hero() {
             <span className="text-white">Predictable Price</span>
           </h1>
           <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Skip the middlemen. Lock in a flat rate across all cuts—ribeye to
-            ground beef. Full traceability from ranch to table.
+            Skip the middlemen. Lock in a flat rate across all cuts, from ribeye to ground beef. Full traceability from ranch to table.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
