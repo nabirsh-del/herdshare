@@ -7,38 +7,30 @@ export function Hero() {
   const contentRef = useScrollReveal();
 
   return (
-    <section
-      className="min-h-screen flex items-center pt-20 relative bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80')`,
-      }}
-    >
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/60" />
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+    <section className="min-h-screen flex items-center pt-20 bg-gradient-to-br from-herd-green via-herd-green to-herd-green-dark">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-32">
         <div ref={contentRef} className="text-center reveal">
-          <p className="text-white uppercase tracking-widest text-sm mb-6 font-medium">
+          <p className="text-white/80 uppercase tracking-widest text-sm mb-8 font-medium">
             Direct from Texas Ranchers
           </p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-8">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight mb-10">
             Premium Beef at a
             <br />
             <span className="text-white">Predictable Price</span>
           </h1>
-          <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Skip the middlemen. Lock in a flat rate across all cuts, from ribeye to ground beef. Full traceability from ranch to table.
+          <p className="text-xl sm:text-2xl text-white/90 mb-16 max-w-xl mx-auto leading-relaxed font-medium">
+            One flat rate. Every cut. Ranch to table traceability.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <Link
               href="/reserve"
-              className="bg-herd-green text-white px-8 py-4 rounded-lg font-medium text-lg hover:bg-herd-green-dark transition-colors"
+              className="bg-white text-herd-green px-8 py-4 rounded-lg font-medium text-lg hover:bg-white/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started
             </Link>
             <a
               href="#how-it-works"
-              className="border border-white/70 text-white px-8 py-4 rounded-lg font-medium text-lg hover:border-white hover:bg-white/10 transition-colors"
+              className="border border-white/50 text-white px-8 py-4 rounded-lg font-medium text-lg hover:border-white hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300"
             >
               Learn More
             </a>

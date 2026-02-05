@@ -6,22 +6,22 @@ const steps = [
   {
     number: '01',
     title: 'We Place a Freezer',
-    description: 'Commercial freezer installed at no cost to you.',
+    description: 'Free commercial freezer installed.',
   },
   {
     number: '02',
     title: 'We Deliver Beef',
-    description: 'Scheduled deliveries—approximately 475 lbs per steer.',
+    description: '~475 lbs per steer, on schedule.',
   },
   {
     number: '03',
     title: 'Serve Premium Beef',
-    description: 'Steaks, roasts, and ground beef for 8+ weeks.',
+    description: '8+ weeks of steaks, roasts, ground.',
   },
   {
     number: '04',
     title: 'Repeat',
-    description: 'Lock in your rate for 3 years. No surprises.',
+    description: 'Same rate for 3 years.',
   },
 ];
 
@@ -37,9 +37,9 @@ function StepCard({
   const ref = useScrollReveal();
 
   return (
-    <div ref={ref} className="reveal">
+    <div ref={ref} className="reveal p-6 rounded-lg bg-white shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-default">
       <p className="text-5xl font-light text-herd-green/30 mb-4">{number}</p>
-      <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
+      <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
       <p className="text-gray-600 leading-relaxed">{description}</p>
     </div>
   );
@@ -52,7 +52,7 @@ export function HowItWorks() {
     <section id="how-it-works" className="py-24 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headerRef} className="text-center mb-20 reveal">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             How It Works
           </h2>
           <p className="text-gray-600 text-lg max-w-xl mx-auto">

@@ -100,7 +100,7 @@ export function ContactForm() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none transition-all duration-300 hover:border-gray-400"
                     placeholder="John Smith"
                   />
                 </div>
@@ -116,7 +116,7 @@ export function ContactForm() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none transition-all duration-300 hover:border-gray-400"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -131,7 +131,7 @@ export function ContactForm() {
                     id="org-type"
                     name="organization_type"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none bg-white"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none bg-white transition-all duration-300 hover:border-gray-400"
                   >
                     <option value="">Select one...</option>
                     <option value="fraternity">Fraternity / Greek Housing</option>
@@ -151,14 +151,14 @@ export function ContactForm() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-herd-green focus:border-transparent outline-none resize-none transition-all duration-300 hover:border-gray-400"
                     placeholder="How many people do you feed?"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="w-full bg-herd-green text-white px-6 py-4 rounded-lg font-medium text-lg hover:bg-herd-green-dark transition-colors disabled:opacity-50"
+                  className="w-full bg-herd-green text-white px-6 py-4 rounded-lg font-medium text-lg hover:bg-herd-green-dark hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                 >
                   {status === 'submitting' ? 'Sending...' : 'Send Message'}
                 </button>
