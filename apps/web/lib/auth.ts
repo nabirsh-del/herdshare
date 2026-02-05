@@ -32,33 +32,23 @@ export async function getOrCreateUser(): Promise<AuthUser | null> {
   // Get role from Clerk metadata or default to BUYER
   const role = (clerkUser.publicMetadata?.role as UserRole) || UserRole.BUYER;
 
-  // Find or create user in database
-  let user = await prisma.user.findUnique({
+  // Find or create user in database using upsert to avoid race conditions
+  const user = await prisma.user.upsert({
     where: { clerkId: userId },
+    update: {
+      email,
+      firstName: clerkUser.firstName,
+      lastName: clerkUser.lastName,
+      role,
+    },
+    create: {
+      clerkId: userId,
+      email,
+      firstName: clerkUser.firstName,
+      lastName: clerkUser.lastName,
+      role,
+    },
   });
-
-  if (!user) {
-    user = await prisma.user.create({
-      data: {
-        clerkId: userId,
-        email,
-        firstName: clerkUser.firstName,
-        lastName: clerkUser.lastName,
-        role,
-      },
-    });
-  } else if (user.email !== email || user.role !== role) {
-    // Sync updates from Clerk
-    user = await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        email,
-        firstName: clerkUser.firstName,
-        lastName: clerkUser.lastName,
-        role,
-      },
-    });
-  }
 
   return {
     id: user.id,
