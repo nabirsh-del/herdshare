@@ -16,19 +16,29 @@ export default async function AdminRanchersPage() {
     include: {
       rancherCommitments: {
         where: {
-          status: 'ACTIVE',
-        },
-      },
-      rancherAssignments: {
-        where: {
-          status: {
-            in: ['PAID', 'SCHEDULED', 'PROCESSING', 'SHIPPED'],
-          },
+          status: 'CONFIRMED',
         },
       },
     },
     orderBy: { createdAt: 'desc' },
   });
+
+  // Get assignments for each rancher separately
+  const rancherIds = ranchers.map((r) => r.id);
+  const assignments = await prisma.allocationIntent.findMany({
+    where: {
+      assignedRancherId: { in: rancherIds },
+      status: { in: ['PAID', 'SCHEDULED', 'PROCESSING', 'SHIPPED'] },
+    },
+  });
+
+  // Group assignments by rancher
+  const assignmentsByRancher = assignments.reduce((acc, order) => {
+    const rancherId = order.assignedRancherId!;
+    if (!acc[rancherId]) acc[rancherId] = [];
+    acc[rancherId].push(order);
+    return acc;
+  }, {} as Record<string, typeof assignments>);
 
   return (
     <div>
@@ -78,7 +88,7 @@ export default async function AdminRanchersPage() {
                 <div className="flex gap-6 text-center">
                   <div>
                     <div className="text-2xl font-bold text-gray-900">
-                      {rancher.rancherAssignments.length}
+                      {(assignmentsByRancher[rancher.id] || []).length}
                     </div>
                     <div className="text-xs text-gray-500">Active Orders</div>
                   </div>
@@ -91,11 +101,11 @@ export default async function AdminRanchersPage() {
                 </div>
               </div>
 
-              {rancher.rancherAssignments.length > 0 && (
+              {(assignmentsByRancher[rancher.id] || []).length > 0 && (
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <div className="text-sm font-medium text-gray-700 mb-2">Active Assignments</div>
                   <div className="flex flex-wrap gap-2">
-                    {rancher.rancherAssignments.slice(0, 5).map((order) => (
+                    {(assignmentsByRancher[rancher.id] || []).slice(0, 5).map((order) => (
                       <span
                         key={order.id}
                         className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-xs"
@@ -104,9 +114,9 @@ export default async function AdminRanchersPage() {
                         {order.productPlan} - {order.status}
                       </span>
                     ))}
-                    {rancher.rancherAssignments.length > 5 && (
+                    {(assignmentsByRancher[rancher.id] || []).length > 5 && (
                       <span className="text-xs text-gray-500">
-                        +{rancher.rancherAssignments.length - 5} more
+                        +{(assignmentsByRancher[rancher.id] || []).length - 5} more
                       </span>
                     )}
                   </div>

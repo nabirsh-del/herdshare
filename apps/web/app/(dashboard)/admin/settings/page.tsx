@@ -16,7 +16,7 @@ export default async function AdminSettingsPage() {
       orderBy: { productPlan: 'asc' },
     }),
     prisma.geoCluster.findMany({
-      orderBy: { zipPrefix: 'asc' },
+      orderBy: { name: 'asc' },
     }),
   ]);
 
@@ -59,12 +59,12 @@ export default async function AdminSettingsPage() {
                         <td className="py-3">
                           <span
                             className={`px-2 py-1 rounded-full text-xs ${
-                              config.isActive
+                              config.active
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-gray-100 text-gray-700'
                             }`}
                           >
-                            {config.isActive ? 'Active' : 'Inactive'}
+                            {config.active ? 'Active' : 'Inactive'}
                           </span>
                         </td>
                       </tr>
@@ -99,7 +99,7 @@ export default async function AdminSettingsPage() {
                   <tbody>
                     {geoClusters.map((cluster) => (
                       <tr key={cluster.id} className="border-b last:border-0">
-                        <td className="py-3 font-mono">{cluster.zipPrefix}xx</td>
+                        <td className="py-3 font-mono">{cluster.zipPrefixes.join(', ')}</td>
                         <td className="py-3">{cluster.region}</td>
                         <td className="py-3">
                           <span
